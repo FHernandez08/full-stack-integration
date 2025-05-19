@@ -17,7 +17,7 @@ main {
     min-height: calc(100vh - 100px);
 }
 
-#submit {
+form {
     background-color: #ffffff;
     color: #000;
     padding: 30px;
@@ -26,7 +26,7 @@ main {
     text-align: center;
 }
 
-#details {
+#register-details {
     display: grid;
     grid-template-rows: 1fr 1fr;
     gap: 10px;
@@ -48,4 +48,3 @@ button:hover {
     color: green;
     border: 1px green solid;
 }
-
