@@ -22,14 +22,36 @@ app.get('/register-page', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send("Email and password are required!");
+    };
+
+    try {
+
+    }
+
+    catch (err) {
+        console.log(err);
+        res.status(500).send('Server error!');
+    }
 });
 
 app.post('/register', (req, res) => {
+    const { firstName, lastName, username, password } = req.body;
 
+    try {
+
+    }
+    
+    catch (err) {
+        console.log(err);
+        res.status(500).send('Server Error!');
+    }
 });
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-})
+});
