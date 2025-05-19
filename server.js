@@ -1,11 +1,14 @@
 const express = require('express');
-const fs = require('fs');
+const user = require('./models/user');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
@@ -23,7 +26,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    
+
 });
 
 // Start the server
