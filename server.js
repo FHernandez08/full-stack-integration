@@ -62,11 +62,26 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const { firstName, lastName, username, password } = req.body;
 
     try {
+        if (!firstName || !lastName || !username || !password) {
+            return res.status(401).json({ message: 'Information is NOT valid' });
+        };
 
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            firstName,
+            lastName,
+            username,
+            password: hashedPassword
+        });
+
+        await newUser.save();
+
+        res.status(200).json({ message: "User created successfully!" });
     }
     
     catch (err) {
