@@ -3,6 +3,8 @@ const user = require('./models/user');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const User = require('./models/user');
+const { authMiddleware } = require('./middleware/authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -21,7 +23,11 @@ app.get('/register-page', (req, res) => {
     res.sendFile(registerPage);
 });
 
-app.post('/login', (req, res) => {
+app.get('/protected', authMiddleware, (req, res) => {
+    return res.status(200).json({ message: 'Your data is presented on a protected route! '});
+});
+
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -29,7 +35,25 @@ app.post('/login', (req, res) => {
     };
 
     try {
+        const foundUser = await User.findOne({ username });
+        if (!foundUser) {
+            return res.status(401).send("Invalid Credentials!");
+        };
 
+        const isMatch = await bcrypt.compare(password, foundUser.password);
+
+        if (!isMatch) {
+            return res.status(401).send("Invalid Credentials");
+        }
+
+        const token = jwt.sign(
+            // foundUser._id is created by mongoDB automatically
+            { id: foundUser._id, username: foundUser.username },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        res.status(200).json({ token });
     }
 
     catch (err) {
