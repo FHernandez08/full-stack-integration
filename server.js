@@ -27,6 +27,37 @@ app.get('/protected', authMiddleware, (req, res) => {
     return res.status(200).json({ message: 'Your data is presented on a protected route! '});
 });
 
+app.get('/profile', (req, res) => {
+    const profilePage = path.join(__dirname, 'public', 'profile.html');
+
+    res.sendFile(profilePage);
+});
+
+app.get('/api/profile', authMiddleware, async (req, res) => {
+    const userId = req.user.id;
+
+    if (!userId) {
+        return res.status(404).json({ message: "The user is not found!" });
+    }
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found!' });
+        }
+
+        const userData = user.toObject();
+        delete userData.password;
+
+        res.status(200).json(userData);
+    }   
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+})
+
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 

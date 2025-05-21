@@ -1,0 +1,26 @@
+body {
+    background-color: #808080;
+    color: #ffffff;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+}
+
+#first-name p,
+#last-name p,
+#username p {
+    background-color: #ffffff;
+    color: black;
+}
