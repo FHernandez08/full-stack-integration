@@ -12,7 +12,7 @@
     </header>
 
     <main>
-        <form action="/login" method="post">
+        <form id="login-form">
             <h3>Enter login credentials</h3>
             <div id="details">
                 <input type="text" name="username" id="username" title="username" required minlength="5" maxlength="20"
@@ -23,5 +23,39 @@
             <button type="submit" id="submit-btn">Submit</button>
         </form>
     </main>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.message || 'Login failed!');
+                    return;
+                }
+
+                localStorage.setItem('token', data.token);
+
+                window.location.href = '/profile';
+            }
+            catch (error) {
+                console.log('Error during login:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
 </body>
 </html>
