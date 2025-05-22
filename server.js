@@ -3,9 +3,20 @@ const user = require('./models/user');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const User = require('./models/user');
 const { authMiddleware } = require('./middleware/authMiddleware');
 require('dotenv').config();
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+})
 
 const app = express();
 const PORT = process.env.PORT || 5000;

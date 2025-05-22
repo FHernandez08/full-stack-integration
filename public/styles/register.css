@@ -3,48 +3,59 @@ body {
     color: #ffffff;
     margin: 0;
     font-family: sans-serif;
+    height: 100vh;
 }
 
 header {
     text-align: center;
     padding: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 100px);
+    height: calc(100vh - 80px); /* 100vh minus header */
 }
 
 form {
     background-color: #ffffff;
-    color: #000;
+    color: #000000;
     padding: 30px;
     width: 300px;
     border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
 #register-details {
     display: grid;
-    grid-template-rows: 1fr 1fr;
     gap: 10px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    width: 125px;
-    padding: 2.5px;
-    border: none;
+    width: 100%;
+    padding: 6px;
     background-color: green;
     color: white;
+    border: none;
     border-radius: 5px;
-    height: 25px;
+    cursor: pointer;
 }
 
 button:hover {
     background-color: white;
     color: green;
-    border: 1px green solid;
+    border: 1px solid green;
 }
